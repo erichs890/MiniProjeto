@@ -9,8 +9,9 @@ class AlunoServico:
         response = requests.get(self.urlBase)
         if response.status_code == 200:
                 dados = response.json()  # Tenta converter a resposta JSON em um objeto Python
-        return dados        
-
+                return dados        
+        else:
+            print("Erro")
 
 
 
