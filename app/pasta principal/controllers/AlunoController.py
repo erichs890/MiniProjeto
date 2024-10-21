@@ -3,24 +3,39 @@ from views.AlunoView import AlunoView
 
 class AlunoController:
     def __init__(self, url):
-        self.aluno_servico = AlunoServico(url)
+        self.alunoServico = AlunoServico(url)
         self.view = AlunoView()
 
-    # Função de filtragem movida para o controller
-    def filtrar_alunos_historia_presencial(self, dados):
-        alunos_historia = []
+    # Função de filtragem continua no controller
+    def filtrarAlunosHistoriaPresencial(self, dados):
+        alunosHistoria = []
         for aluno in dados:
             if aluno['curso'] == 'História' and aluno['modalidade'] == "Presencial":
-                alunos_historia.append(aluno['nome'])
-        return alunos_historia
+                alunosHistoria.append(aluno['nome'])
+        return alunosHistoria
 
-    # Função principal para listar alunos de História
-    def listar_alunos_historia(self):
-        # Obtém os alunos do serviço
-        dados = self.aluno_servico.getAlunos()
+    # Função principal para controlar a exibição dos alunos
+    def listarAlunosHistoria(self):
+        # Obtém os dados do serviço
+        dados = self.alunoServico.getAlunos()
 
         # Filtra os alunos de História presencial
-        alunos_historia = self.filtrar_alunos_historia_presencial(dados)
+        alunosHistoria = self.filtrarAlunosHistoriaPresencial(dados)
 
-        # Passa os alunos filtrados para a view
-        self.view.listar_alunos(alunos_historia)
+        # Passa a lista filtrada para a view exibir
+        self.view.listar_alunos(alunosHistoria)
+
+    # Função para buscar aluno por ID ou nome
+    def buscarAluno(self, id=None, nome=None):
+        # Obtém os dados do serviço
+        dados = self.alunoServico.getAlunos()
+
+        # Verifica se o aluno foi encontrado pelo ID ou nome
+        alunoEncontrado = None
+        for aluno in dados:
+            if (id and isinstance(id, int) and aluno['id'] == id) or (nome and aluno['nome'] == nome):
+                alunoEncontrado = aluno
+                break
+
+        # Exibe os detalhes do aluno, ou uma mensagem se não encontrado
+        self.view.alunoInfo(alunoEncontrado)
