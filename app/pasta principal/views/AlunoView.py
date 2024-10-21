@@ -1,7 +1,3 @@
-from controllers.AlunoController import AlunoController
-from alunosFiltro import *
-
-
 class AlunoView:
     def listar_alunos(self, nomes_historia):
         contador = 0

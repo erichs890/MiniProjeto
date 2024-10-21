@@ -1,15 +1,19 @@
 from serviços.AlunoServico import AlunoServico
-from modelos.Aluno import Aluno
+from alunosFiltro import AlunosFiltro
+from views.AlunoView import AlunoView
 
 class AlunoController:
-    def __init__(self, servico_aluno):
-        self.servico_aluno = servico_aluno
+    def __init__(self, url):
+        self.aluno_servico = AlunoServico(url)
+        self.filtro = AlunosFiltro()
+        self.view = AlunoView()
 
-    def get_alunos(self, curso, modalidade):
-        dados_alunos = self.servico_aluno.get_alunos(curso, modalidade)
-        alunos = [Aluno(**dados) for dados in dados_alunos]
-        return alunos
-
-    def get_aluno(self, id):
-        dados_aluno = self.servico_aluno.get_aluno(id)
-        return Aluno(**dados_aluno)
+    def listar_alunos_historia(self):
+        # Obtém os alunos do serviço
+        dados = self.aluno_servico.getAlunos()
+        
+        # Aplica o filtro para alunos de História na modalidade Presencial
+        alunos_historia = self.filtro.filtroHistoria(dados)
+        
+        # Passa os alunos filtrados para a view
+        self.view.listar_alunos(alunos_historia)
