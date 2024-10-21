@@ -1,16 +1,15 @@
-from serviços.AlunoServicons import AlunoServico
-class Filtro:
-    def __init__(self, servico_aluno):
-        self.servico_aluno = servico_aluno
-    
-    dados = AlunoServico.getAlunos()
+from serviços.AlunoServico import AlunoServico
+class AlunosFiltro:
 
-    def filtroHistoria(self, dados,curso, modalidade):
+
+
+
+    def filtroHistoria(self, dados):
             nomes_historia = []
             for pessoa in dados:
-                if 'curso' in pessoa and pessoa['curso'] == curso and 'modalidade' in pessoa and pessoa['modalidade'] == modalidade:
+                if 'curso' in pessoa and pessoa['curso'] == 'História' and 'modalidade' in pessoa and pessoa['modalidade'] == "Presencial":
                     if 'nome' in pessoa:
                         nomes_historia.append(pessoa['nome'])
-                        contador += 1
+                        return nomes_historia
                     else:
                         print("Aviso: Encontrado aluno sem nome no JSON.")
