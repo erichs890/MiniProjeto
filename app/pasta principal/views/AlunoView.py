@@ -1,3 +1,5 @@
+# from controllers.AlunoController import AlunoController
+
 class AlunoView:
     # Método responsável por exibir os alunos filtrados
     def listar_alunos(self, alunos_historia):

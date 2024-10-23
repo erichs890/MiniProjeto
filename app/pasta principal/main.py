@@ -8,5 +8,4 @@ aluno_controller = AlunoController(url)
 
 
 # Exemplo de busca por ID ou nome
-aluno_controller.buscarAluno(id=1)  # Busca por ID
-
+aluno_controller.buscarAluno(id=1) 

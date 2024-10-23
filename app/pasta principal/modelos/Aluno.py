@@ -1,8 +1,13 @@
-class aluno:
-    def __init__(self, id:int, nome:str, curso:str, modalidade:str, status:str):
-        self.id = id
-        self.nome = nome
-        self.curso = curso,
-        self.modalidade = modalidade
-        self.status = status
-    
+import requests
+
+class AlunoModelo:
+    def __init__(self, urlBase):
+        self.urlBase = urlBase
+
+    def getAlunos(self):
+        response = requests.get(self.urlBase)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("Erro ao buscar dados")
+            return []
