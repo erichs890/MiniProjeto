@@ -3,7 +3,7 @@ import requests
 class AlunoModelo:
     def __init__(self, urlBase):
         self.urlBase = urlBase
-
+        
     def getAlunos(self):
         response = requests.get(self.urlBase)
         if response.status_code == 200:

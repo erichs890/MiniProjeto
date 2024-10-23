@@ -23,7 +23,7 @@ class AlunoController:
         alunosHistoria = self.filtrarAlunosHistoriaPresencial(dados)
 
         # Passa a lista filtrada para a view exibir
-        self.view.listar_alunos(alunosHistoria)
+        self.view.listarAlunos(alunosHistoria)
 
     # Função para buscar aluno por ID ou nome
     def buscarAluno(self, id=None, nome=None):

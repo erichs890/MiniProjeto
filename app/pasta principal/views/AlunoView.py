@@ -2,12 +2,12 @@
 
 class AlunoView:
     # Método responsável por exibir os alunos filtrados
-    def listar_alunos(self, alunos_historia):
+    def listarAlunos(self, alunos_historia):
         contador = 0
         for aluno in alunos_historia:
             print(aluno)
             contador += 1
-        print(f"{contador} alunos encontrados.")
+        print(f"{contador} alunos encontrados.") 
 
     # Método responsável por exibir os detalhes de um aluno específico
     def alunoInfo(self, aluno):
