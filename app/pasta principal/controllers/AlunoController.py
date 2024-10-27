@@ -3,31 +3,19 @@ from views.AlunoView import AlunoView
 
 class AlunoController:
     def __init__(self, url):
+        # Inicializa o modelo e a view
         self.alunoModelo = AlunoModelo(url)
         self.view = AlunoView()
 
-    # Função de filtragem continua no controller
-    def filtrarAlunosHistoriaPresencial(self, dados):
-        alunosHistoria = []
-        for aluno in dados:
-            if aluno['curso'] == 'História' and aluno['modalidade'] == "Presencial":
-                alunosHistoria.append(aluno['nome'])
-        return alunosHistoria
-
-    # Função principal para controlar a exibição dos alunos
     def listarAlunosHistoria(self):
-        # Obtém os dados do serviço
-        dados = self.alunoModelo.getAlunos()
-
-        # Filtra os alunos de História presencial
-        alunosHistoria = self.filtrarAlunosHistoriaPresencial(dados)
-
+        # Filtra os alunos diretamente pelo modelo
+        alunosHistoria = self.alunoModelo.filtrarAlunosHistoriaPresencial()
+        
         # Passa a lista filtrada para a view exibir
-        self.view.listarAlunos(alunosHistoria)
+        self.view.listar_alunos(alunosHistoria)
 
-    # Função para buscar aluno por ID ou nome
     def buscarAluno(self, id=None, nome=None):
-        # Obtém os dados do serviço
+        # Obtém todos os alunos do modelo
         dados = self.alunoModelo.getAlunos()
 
         # Verifica se o aluno foi encontrado pelo ID ou nome
@@ -37,5 +25,5 @@ class AlunoController:
                 alunoEncontrado = aluno
                 break
 
-        # Exibe os detalhes do aluno, ou uma mensagem se não encontrado
+        # Exibe os detalhes do aluno ou uma mensagem de não encontrado
         self.view.alunoInfo(alunoEncontrado)

@@ -11,3 +11,15 @@ class AlunoModelo:
         else:
             print("Erro ao buscar dados")
             return []
+
+    def filtrarAlunosHistoriaPresencial(self):
+        # Obtém todos os alunos
+        dados = self.getAlunos()
+
+        # Filtra os alunos de História na modalidade presencial
+        alunosHistoria = [
+            aluno for aluno in dados
+            if aluno.get('curso') == 'História' and aluno.get('modalidade') == "Presencial"
+        ]
+        
+        return alunosHistoria
