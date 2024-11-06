@@ -28,3 +28,11 @@ class DisciplinaModelo:
         # Remove uma disciplina da lista de matrículas do aluno
         if aluno_id in self.matriculas:
             self.matriculas[aluno_id].discard(disciplina_id)
+
+    def buscarDisciplina(self, disciplina_id):
+        # Busca e retorna a disciplina pelo ID
+        disciplinas = self.getDisciplinas()
+        for disciplina in disciplinas:
+            if disciplina['id'] == disciplina_id:
+                return disciplina
+        return None

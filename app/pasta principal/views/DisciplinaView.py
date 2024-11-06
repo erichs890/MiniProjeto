@@ -3,15 +3,15 @@ class DisciplinaView:
         if disciplinas:
             print("Disciplinas disponíveis:")
             for disciplina in disciplinas:
-                print(f"ID: {disciplina['id']}, Nome: {disciplina['nome']}, Curso: {disciplina['curso']}")
+                print(f"ID: {disciplina['id']}, Nome: {disciplina['nome']}")
         else:
             print("Nenhuma disciplina disponível.")
 
-    def listar_disciplinas_matriculadas(self, disciplinas):
+    def listar_disciplinas_matriculadas(self, disciplinas, nome_aluno):
         if disciplinas:
-            print("Disciplinas matriculadas:")
+            print(f"Disciplinas matriculadas por {nome_aluno}:")
             for disciplina in disciplinas:
-                print(f" - {disciplina}")
+                print(f"ID: {disciplina['id']}, Nome: {disciplina['nome']}")
         else:
             print("Nenhuma disciplina matriculada.")
 
