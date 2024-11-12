@@ -1,3 +1,5 @@
+# modelos/Aluno.py
+
 import requests
 
 class AlunoModelo:
@@ -5,21 +7,26 @@ class AlunoModelo:
         self.urlBase = urlBase
 
     def getAlunos(self):
-        try:
-            response = requests.get(self.urlBase)
-            response.raise_for_status()  # Levanta um erro para status HTTP 4xx/5xx
+        response = requests.get(self.urlBase)
+        if response.status_code == 200:
             return response.json()
-        except requests.exceptions.RequestException as e:
-            print(f"Erro ao buscar dados: {e}")
+        else:
+            print("Erro ao buscar dados")
             return []
 
+    def buscarAlunoPorId(self, id_aluno):
+        # Busca todos os alunos e retorna o que possui o ID especificado
+        alunos = self.getAlunos()
+        for aluno in alunos:
+            if aluno.get('id') == id_aluno:
+                return aluno
+        return None
+
     def filtrarAlunosHistoriaPresencial(self):
+        # Obtém todos os alunos
         dados = self.getAlunos()
-        
-        if not dados:
-            print("Erro: Nenhum dado de aluno encontrado.")
-            return []
-        
+
+        # Filtra os alunos de História na modalidade presencial
         alunosHistoria = [
             aluno for aluno in dados
             if aluno.get('curso') == 'História' and aluno.get('modalidade') == "Presencial"
