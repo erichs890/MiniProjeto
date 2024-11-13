@@ -6,10 +6,14 @@ class DisciplinaController:
         self.disciplinaModelo = DisciplinaModelo(url)
         self.alunoModelo = aluno_modelo
         self.view = DisciplinaView()
-
     def listarDisciplinasDisponiveis(self):
-        disciplinas = self.disciplinaModelo.getDisciplinas()
-        self.view.listar_disciplinas(disciplinas)
+        # Busca todas as disciplinas no modelo e filtra apenas as de História
+        todas_disciplinas = self.disciplinaModelo.getDisciplinas()
+        disciplinas_historia = [disciplina for disciplina in todas_disciplinas if disciplina.get('curso') == 'História']
+        
+        # Exibe apenas as disciplinas de História na view
+        self.view.listar_disciplinas(disciplinas_historia)
+
 
     def matricularDisciplina(self, aluno_id, disciplina_id):
         aluno = self.alunoModelo.buscarAlunoPorId(aluno_id)
