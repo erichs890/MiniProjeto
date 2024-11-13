@@ -15,15 +15,21 @@ class DisciplinaController:
         aluno = self.alunoModelo.buscarAlunoPorId(aluno_id)
         disciplina = self.disciplinaModelo.buscarDisciplinaPorId(disciplina_id)
 
-        if aluno and disciplina:
-            sucesso = self.disciplinaModelo.matricularAlunoEmDisciplina(aluno_id, disciplina_id)
+        # Verifica se o aluno está no curso de História e tem status ativo
+        if aluno and aluno['curso'] == 'História' and aluno['status'] == 'ativo':
+            if disciplina:
+                matricula = {'aluno': aluno['nome'], 'disciplina': disciplina['nome']}
+                sucesso = self.disciplinaModelo.matricularAlunoEmDisciplina(aluno_id, disciplina_id)
 
-            if sucesso:
-                self.view.exibir_mensagem(f"Aluno {aluno['nome']} foi matriculado na disciplina {disciplina['nome']} com sucesso!")
+                if sucesso:
+                    self.view.exibir_mensagem(f"Aluno {aluno['nome']} foi matriculado na disciplina {disciplina['nome']} com sucesso!")
+                else:
+                    self.view.exibir_mensagem("Aluno já está matriculado na disciplina.")
             else:
-                self.view.exibir_mensagem("Aluno já está matriculado na disciplina.")
+                self.view.exibir_mensagem("Disciplina não encontrada.")
         else:
-            self.view.exibir_mensagem("Aluno ou disciplina não encontrados.")
+            self.view.exibir_mensagem("Apenas alunos do curso de História com status ativo podem ser matriculados.")
+
 
     def listarDisciplinasMatriculadas(self, aluno_id):
         aluno = self.alunoModelo.buscarAlunoPorId(aluno_id)
