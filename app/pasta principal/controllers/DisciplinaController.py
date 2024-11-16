@@ -8,8 +8,15 @@ class DisciplinaController:
         self.view = DisciplinaView()
 
     def listarDisciplinasDisponiveis(self):
-        disciplinas = self.disciplinaModelo.getDisciplinas()
-        self.view.listar_disciplinas(disciplinas)
+        disciplinas = self.disciplinaModelo.getDisciplinas()  # Obtém todas as disciplinas
+        disciplinas_historia = [d for d in disciplinas if d['curso'] == 'História']  # Filtra as disciplinas do curso de História
+        
+        if disciplinas_historia:
+            print("\nDisciplinas disponíveis para o curso de História:")
+            for disciplina in disciplinas_historia:
+                print(f"ID: {disciplina['id']} - Nome: {disciplina['nome']}")
+        else:
+            print("Não há disciplinas disponíveis para o curso de História.")
 
     def matricularDisciplina(self, aluno_id, disciplina_id):
         aluno = self.alunoModelo.buscarAlunoPorId(aluno_id)
@@ -21,20 +28,27 @@ class DisciplinaController:
 
         # Verifica se o aluno é do curso de História, modalidade presencial, e está ativo
         if aluno:
-            curso = aluno.get('curso')
+            curso_aluno = aluno.get('curso')
             modalidade = aluno.get('modalidade')
             status = aluno.get('status')
 
             # Exibe o curso, modalidade e status do aluno
-            print(f"Curso: {curso}, Modalidade: {modalidade}, Status: {status}")
+            print(f"Curso: {curso_aluno}, Modalidade: {modalidade}, Status: {status}")
 
-            if curso == 'História' and modalidade == "Presencial" and status == 'Ativo':
+            # Verificar se o aluno é do curso de História
+            if curso_aluno == 'História' and modalidade == "Presencial" and status == 'Ativo':
                 if disciplina:
-                    sucesso = self.disciplinaModelo.matricularAlunoEmDisciplina(aluno_id, disciplina_id)
-                    if sucesso:
-                        self.view.exibir_mensagem(f"Aluno {aluno['nome']} foi matriculado na disciplina {disciplina['nome']} com sucesso!")
+                    curso_disciplina = disciplina.get('curso')  # Verifica o curso da disciplina
+
+                    # Verificar se a disciplina é do curso de História
+                    if curso_disciplina == 'História':
+                        sucesso = self.disciplinaModelo.matricularAlunoEmDisciplina(aluno_id, disciplina_id)
+                        if sucesso:
+                            self.view.exibir_mensagem(f"Aluno {aluno['nome']} foi matriculado na disciplina {disciplina['nome']} com sucesso!")
+                        else:
+                            self.view.exibir_mensagem("Aluno já está matriculado na disciplina.")
                     else:
-                        self.view.exibir_mensagem("Aluno já está matriculado na disciplina.")
+                        self.view.exibir_mensagem("A disciplina não é do curso de História.")
                 else:
                     self.view.exibir_mensagem("Disciplina não encontrada.")
             else:
