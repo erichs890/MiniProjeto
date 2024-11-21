@@ -10,7 +10,7 @@ biblioteca_url = "https://qiiw8bgxka.execute-api.us-east-2.amazonaws.com/acervo/
 # Inicializa os controladores
 aluno_controller = AlunoController(aluno_url)
 disciplina_controller = DisciplinaController(disciplina_url, aluno_controller.alunoModelo)
-biblioteca_controller = BibliotecaController(biblioteca_url)
+biblioteca_controller = BibliotecaController(biblioteca_url, aluno_controller.alunoModelo)
 
 while True:
     print("\nMenu Principal:")
@@ -54,7 +54,7 @@ while True:
             disciplina_controller.listarDisciplinasDisponiveis()
         elif opcao_disciplina == '2':
             aluno_id = int(input("Digite o ID do aluno: "))
-            disciplina_id = int(input("Digite o ID da discip3lina para matrícula: "))
+            disciplina_id = int(input("Digite o ID da disciplina para matrícula: "))
             disciplina_controller.matricularDisciplina(aluno_id, disciplina_id)
         elif opcao_disciplina == '3':
             aluno_id = int(input("Digite o ID do aluno: "))
@@ -79,14 +79,10 @@ while True:
         elif opcao_biblioteca == '2':
             aluno_id = int(input("Digite o ID do aluno: "))
             livro_id = int(input("Digite o ID do livro para reservar: "))
-            aluno = aluno_controller.alunoModelo.buscarAlunoPorId(aluno_id)
-            if aluno:
-                biblioteca_controller.reservarLivro(aluno, livro_id)
-            else:
-                print("Erro: Aluno não encontrado.")
+            biblioteca_controller.reservarLivro(aluno_id, livro_id)
         elif opcao_biblioteca == '3':
             aluno_id = int(input("Digite o ID do aluno: "))
-            biblioteca_controller.listarReservas(aluno_id)
+            biblioteca_controller.listarLivrosReservados(aluno_id)
         elif opcao_biblioteca == '4':
             aluno_id = int(input("Digite o ID do aluno: "))
             livro_id = int(input("Digite o ID do livro para cancelar reserva: "))
