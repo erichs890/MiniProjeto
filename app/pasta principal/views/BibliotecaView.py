@@ -1,35 +1,21 @@
 class BibliotecaView:
-    def listar_livros_disponiveis(self, livros):
+    def listar_livros(self, livros):
         print("\nLivros disponíveis:")
-        for livro in livros:
-            status = "Reservado" if livro['status'] != "null" else "Disponível"
-            print(f"ID: {livro['id']} - Título: {livro['titulo']}, Autor: {livro['autor']}, Ano: {livro['ano']} - Status: {status}")
+        for livro_id, livro in livros.items():
+            print(f"ID: {livro_id}, Título: {livro['titulo']}, Autor: {livro['autor']}, Ano: {livro['ano']}, Status: {livro['status']}")
         print()
-
-    def confirmar_reserva(self, livro, nome_aluno):
-        print(f"Reserva confirmada: Aluno {nome_aluno} reservou o livro '{livro['titulo']}' com sucesso!")
-
-    def listar_livros_reservados(self, nome_aluno, livros):
-        print(f"\nLivros reservados por {nome_aluno}:")
-        if livros:
-            for livro in livros:
-                print(f"- ID: {livro['id']}, Título: {livro['titulo']}, Autor: {livro['autor']}, Ano: {livro['ano']}, Status: {livro['status']}")
-        else:
-            print("Nenhum livro reservado.")
-
-
-    def confirmar_reserva(self, livro, nome_aluno):
-        if livro:
-            print(f"Reserva confirmada: Aluno {nome_aluno} reservou o livro '{livro['titulo']}' com sucesso!")
-        else:
-            print("Erro: Não foi possível realizar a reserva.")
 
     def exibir_mensagem(self, mensagem):
         print(mensagem)
 
-    def confirmar_cancelamento(self, nome_aluno, livro):
+    def listar_livros_reservados(self, aluno_nome, livros_reservados):
+        print(f"\nLivros reservados por {aluno_nome}:")
+        for livro in livros_reservados:
+            print(f"ID: {livro['id']}, Título: {livro['titulo']}, Autor: {livro['autor']}, Ano: {livro['ano']}")
+        print()
 
-        if livro:
-            print(f"Reserva do livro '{livro['titulo']}' (ID: {livro['id']}) cancelada com sucesso para o aluno {nome_aluno}.")
-        else:
-            print("Erro: Não foi possível cancelar a reserva. Livro ou aluno não encontrado.")
+    def confirmar_reserva(self, aluno_nome, livro):
+        print(f"Reserva confirmada: Aluno {aluno_nome} reservou o livro '{livro['titulo']}' com sucesso!")
+
+    def confirmar_cancelamento(self, aluno_nome, livro):
+        print(f"Reserva do livro '{livro['titulo']}' para o aluno {aluno_nome} foi cancelada com sucesso.")

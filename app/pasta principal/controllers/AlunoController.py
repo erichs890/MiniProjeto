@@ -11,20 +11,21 @@ class AlunoController:
         self.view.listar_alunos(alunosHistoria)
 
     def buscarAluno(self, id=None, nome=None):
-        # Obtém os dados dos alunos
-        dados = self.alunoModelo.getAlunos()
-        
-        # Verifica se os dados foram obtidos corretamente
-        if not dados:
-            print("Erro: Não foi possível obter os dados dos alunos.")
-            return
-        
+        """
+        Busca um aluno por ID ou nome.
+        """
         alunoEncontrado = None
-        for aluno in dados:
-            # Verifica se estamos buscando por ID ou nome
-            if (id and isinstance(id, int) and aluno['id'] == id) or (nome and aluno['nome'].lower() == nome.lower()):
-                alunoEncontrado = aluno
-                break
+
+        # Busca por ID
+        if id:
+            alunoEncontrado = self.alunoModelo.buscarAlunoPorId(id)
+        
+        # Busca por nome
+        elif nome:
+            for aluno in self.alunoModelo.alunos:
+                if aluno['nome'].lower() == nome.lower():
+                    alunoEncontrado = aluno
+                    break
 
         # Exibe as informações do aluno encontrado ou uma mensagem de erro
         if alunoEncontrado:

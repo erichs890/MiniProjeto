@@ -12,6 +12,7 @@ aluno_controller = AlunoController(aluno_url)
 disciplina_controller = DisciplinaController(disciplina_url, aluno_controller.alunoModelo)
 biblioteca_controller = BibliotecaController(biblioteca_url, aluno_controller.alunoModelo)
 
+#Menu
 while True:
     print("\nMenu Principal:")
     print("1. Alunos")
