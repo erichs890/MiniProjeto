@@ -12,7 +12,6 @@ class DisciplinaModelo:
         if response.status_code == 200:
             disciplinas = response.json()
             self.disciplinas = {disciplina['id']: disciplina for disciplina in disciplinas}
-            print(f"Disciplinas carregadas: {len(self.disciplinas)} disciplinas encontradas.")
         else:
             print("Erro ao carregar disciplinas.")
 

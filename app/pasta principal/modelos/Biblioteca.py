@@ -12,7 +12,6 @@ class BibliotecaModelo:
         if response.status_code == 200:
             livros = response.json()
             self.livros = {livro['id']: livro for livro in livros}  # Converte para dicionário
-            print(f"Livros carregados: {len(self.livros)} livros encontrados.")
         else:
             print("Erro ao carregar livros da biblioteca.")
 
